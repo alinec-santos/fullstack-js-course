@@ -15,18 +15,18 @@ Armazenar os projetos práticos realizados ao longo do curso, organizados por te
 ## Estrutura do Projeto
 
 
-fullstack-js-course/
-│
-├── frontend/
-│ ├── react/
-│ ├── react-native/
-│ └── nextjs/
-│
-├── backend/
-│ └── node/
-│
-├──.gitignore
-└── README.md
+fullstack-js-course/  
+│  
+├── frontend/  
+│ ├── react/  
+│ ├── react-native/  
+│ └── nextjs/  
+│  
+├── backend/  
+│ └── node/  
+│  
+├──.gitignore  
+└── README.md  
 
 
 
