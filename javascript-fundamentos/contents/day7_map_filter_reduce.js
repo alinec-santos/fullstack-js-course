@@ -61,3 +61,17 @@ users.reduce((acc,user)=>{
     }
     return acc;
 },[]);//ao inves d0, sera uma lista que vai ser preenchida
+
+
+let result = [1, 2, 3].reduce((acc, current) => { //acc começa do primeiro elemento do array             current começa com o segundo elemento
+  return acc + current;
+});
+console.log(result);
+
+let result1 = [{age: 10}, {age: 20}].reduce((acc, current) => { //acc começa como o primeiro objeto        current comçea com o segundo objeto
+  return acc + current.age;//js tenta converter o objeto para string
+},0); //para funcionar corretamente o acc tem que começar em 0
+console.log(result1);
+
+let result2 = [5].reduce((acc, current) => acc + current);
+console.log(result2);
