@@ -19,9 +19,7 @@ fullstack-js-course/
 │  
 ├── frontend/  
 │ ├── react/  
-│ ├── react-native/  
-│ └── nextjs/  
-│  
+│ 
 ├── backend/  
 │ └── node/  
 │  
@@ -36,12 +34,11 @@ fullstack-js-course/
 
 ### Frontend
 - React
-- React Native
-- Next.js
+
 
 ### Backend
 - Node.js
 - Express
-- TypeScript
+
 
 ---
