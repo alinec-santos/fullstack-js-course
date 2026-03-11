@@ -13,7 +13,7 @@ Mais do que o resultado final, o objetivo foi praticar a forma de pensar em **co
 ---
 ## Demonstração
 
-![Interface do Pomodoro](./assets/projeto-screenshot.png)
+![Interface do Pomodoro](./src/assets/projeto-screenshot.png)
 ---
 
 ## O que a aplicação faz
@@ -121,7 +121,7 @@ git clone <url-do-repositorio>
 ```
 Entre na pasta do projeto:
 ```bash
-cd pomodoro-tasks
+cd pomodoro-app
 ```
 Instale as dependências:
 ```bash
