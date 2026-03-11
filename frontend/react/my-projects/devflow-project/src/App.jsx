@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <header>
-        <h1>🚀 DevFlow</h1>
+        <h1> DevFlow</h1>
         <p>Bem-vindo, {nomeUsuario}!</p>
       </header>
 
