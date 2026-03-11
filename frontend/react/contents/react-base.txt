@@ -1,0 +1,14 @@
+JSX - Significa JavaScript XML. Ele permite escrever HTML dentro do JavaScript.
+Ex: <h1>Hello</h1> -> mas isso não é HTML.Na verdade,o react transforma isso em JavaScript.
+
+
+Components - são blocos de contrução fundamentais do react.
+Em vez de escrever um arquivo HTML gigante com milhares de linhas, você divide a interface em pequenas partes independentes e reutilizáveis.
+Existem duas regras - o nome deve sempre começar com LETRA MAIÚSCULA e ele deve retornar apenas UM elemento pai.
+
+
+Props- são a forma de passar dados de um componente pai para um componente filho.Funcionam como parâmetros de função.
+Para que usamos props -  Principalmente para:
+* enviar dados
+* reutilizar componentes
+* criar listas dinâmicas
