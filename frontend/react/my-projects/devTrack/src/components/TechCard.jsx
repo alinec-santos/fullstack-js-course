@@ -83,13 +83,14 @@ function TechCard(){
       {/* cards list */}
       <ul className="w-full space-y-2">
         {cards.map((card) => (
-          <li key={card.id}>
-            <span>Technology: {card.name}</span>
-            <span>Status: {card.status}</span>
-            <span>Progress: {card.progress}</span>
-          </li>
+            <TechCardItem
+            key={card.id}
+            name={card.name}
+            status={card.status}
+            progress={card.progress}
+            />
         ))}
-      </ul>
+        </ul>
       </div>
 
       
