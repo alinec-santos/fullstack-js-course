@@ -3,6 +3,8 @@ import TechCardItem from "./TechCardItem";
 
 
 function TechCard(){
+
+    //estado do formulario, aqui usamos usestate para guardar os dados que o usuario digita
     const [formData, setFormData] = useState({
         name: "",
         status: "",
@@ -11,15 +13,20 @@ function TechCard(){
 
     const [cards, setCards] = useState([]);
 
-    // (e) é o evento do input.
+    /*Evento de input. essa funçao roda sempre qeu o usuario digita algo. Aqui usamos inputs controlados, pq o valor do input vem do estado */
     function handleChange(e) {
+        //pegamos o nome do input e o valor digitado
         const { name, value } = e.target;
 
+        //aqui atualizamos o estado do formulario
+        //usamos spread(...) para manter a imutabilidade do estado
         setFormData((prev) => ({
             ...prev,
             [name]: value
         }));
     }
+
+
 
     function addTechCard() {
         if(!formData.name.trim() || !formData.status.trim() || !formData.progress.trim()) return; //se algum campo estiver vazio, a função para 
@@ -40,6 +47,7 @@ function TechCard(){
     }
 
     function deleteCards(id) {
+        //usamos filter para criar um novo array sem o card clicado
     const filteredCards = cards.filter((card) => card.id !== id);
     setCards(filteredCards);
     }
@@ -52,13 +60,13 @@ function TechCard(){
 
       {/* Input */}
       <div className="flex gap-2 w-full">
-
+        {/*input controlado. O valor vem do estado formData */}
         <input
           name= "name"
           className="flex-1 p-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:border-white/30"
           placeholder="Technology name..."
           value={formData.name}
-          onChange={handleChange}
+          onChange={handleChange} // evento onChange atualiza o estado
           
         />
 
@@ -86,15 +94,18 @@ function TechCard(){
           Add a tech
         </button>
 
-      {/* cards list */}
+      {/* aqui usamos map para renderizar uma lista dinamica. Cada item precisa de uma Key unica para o react controlar a renderizaçao*/}
       <ul className="w-full space-y-2">
         {cards.map((card) => (
+            //componetizaçao : em vezz de escrever o card aqui dentro, usamos um componente separado
             <TechCardItem
             key={card.id}
             id={card.id}
             name={card.name}
             status={card.status}
             progress={card.progress}
+
+            //aqui estamos enviando uma funçao para o componente filho. Isso é comunicaçao entre os componentes usando props
             onDelete={deleteCards}
             
             />
