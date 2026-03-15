@@ -1,4 +1,6 @@
 import { useState } from "react";
+import TechCardItem from "./TechCardItem";
+
 
 function TechCard(){
     const [formData, setFormData] = useState({
@@ -37,6 +39,10 @@ function TechCard(){
 
     }
 
+    function deleteCards(id) {
+    const filteredCards = cards.filter((card) => card.id !== id);
+    setCards(filteredCards);
+    }
 
     return(
     <div className="bg-slate-900 min-h-screen text-white flex flex-col items-center pt-10">
@@ -85,12 +91,17 @@ function TechCard(){
         {cards.map((card) => (
             <TechCardItem
             key={card.id}
+            id={card.id}
             name={card.name}
             status={card.status}
             progress={card.progress}
+            onDelete={deleteCards}
+            
             />
+            
         ))}
         </ul>
+        
       </div>
 
       
