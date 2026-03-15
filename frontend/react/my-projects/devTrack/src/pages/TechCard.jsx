@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TechCardItem from "./TechCardItem";
+import TechCardItem from "../components/TechCardItem";
 
 
 function TechCard(){
