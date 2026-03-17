@@ -189,3 +189,11 @@ Utilizar `map()` para modificar um elemento específico.
 Essas operações mantêm a **imutabilidade do estado**, fundamental para o funcionamento correto do React.
 
 
+
+### UseEffect - é um hook que roda efeitos colaterais, tipo: 
+ -buscar dados de API
+ -acessar localStorage
+ -timers
+ Ex: useEffect(()=>{
+    //codigo que roda automaticamente
+ },[]) //[] => roda so uma vez quando o componente monta
