@@ -50,14 +50,66 @@ function TechCard() {
     setCards(filteredCards);
   }
 
+
+  //mostrar o total de tecnologias
+  const total = cards.length;
+
+  //quantidade por status
+  const studying = cards.filter(card=>card.status === "studying").length;
+  const reviewing = cards.filter (card=> card.status === "reviewing").length;
+  const mastered = cards.filter(card=> card.status === "mastered").length;
+  const paused = cards.filter(card=> card.status ===  "paused").length;
+
+  //média do progresso 
+  const average = 
+    total === 0
+      ? 0
+      : Math.round(
+          cards.reduce((acc,card)=> acc + Number(card.progress || 0),0) / total
+      );//reduce acumula todos os valores em um único resultado.
   return (
-    <div className="bg-zinc-950 min-h-screen text-white flex flex-col px-12 py-16">
+    <div className="bg-zinc-950 min-h-screen text-white flex flex-col px-4 md:px-12 py-16">
+      {/* dashboard de resumo */}
+      
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+
+        <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl">
+          <p className="text-xs text-zinc-500">Total</p>
+          <h2 className="text-xl font-bold">{total}</h2>
+        </div>
+
+        <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl">
+          <p className="text-xs text-zinc-500">Studying</p>
+          <h2 className="text-xl font-bold text-blue-400">{studying}</h2>
+        </div>
+
+        <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl">
+          <p className="text-xs text-zinc-500">Reviewing</p>
+          <h2 className="text-xl font-bold text-blue-400">{reviewing}</h2>
+        </div>
+
+        <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl">
+          <p className="text-xs text-zinc-500">Paused</p>
+          <h2 className="text-xl font-bold text-blue-400">{paused}</h2>
+        </div>
+
+        <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl">
+          <p className="text-xs text-zinc-500">Mastered</p>
+          <h2 className="text-xl font-bold text-emerald-400">{mastered}</h2>
+        </div>
+
+        <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl">
+          <p className="text-xs text-zinc-500">Avg Progress</p>
+          <h2 className="text-xl font-bold text-yellow-400">{average}%</h2>
+        </div>
+
+      </div>
 
       {/* Container principal ocupa toda a largura */}
       <div className="w-full flex flex-col gap-10">
 
         {/* Cabeçalho */}
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2">
           <span className="text-sm font-mono text-emerald-400 tracking-widest uppercase">stack tracker</span>
           <h1 className="text-5xl font-bold text-white tracking-tight">Tech Cards</h1>
           <div className="w-10 h-0.5 bg-emerald-500 mt-1 rounded-full" />
@@ -67,7 +119,7 @@ function TechCard() {
         <div className="flex flex-col gap-3">
 
           {/* Linha de inputs */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
             {/* Input controlado — valor vem do estado formData */}
             <input
