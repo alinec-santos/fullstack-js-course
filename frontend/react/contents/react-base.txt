@@ -197,3 +197,5 @@ Essas operações mantêm a **imutabilidade do estado**, fundamental para o func
  Ex: useEffect(()=>{
     //codigo que roda automaticamente
  },[]) //[] => roda so uma vez quando o componente monta
+
+ obs: hooks são funçoes especiais que permitem conectar recursos de estado e ciclo de vida a componentes funcionais eliminando a necessidade de classes. 
