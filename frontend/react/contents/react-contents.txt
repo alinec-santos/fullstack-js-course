@@ -199,3 +199,14 @@ Essas operações mantêm a **imutabilidade do estado**, fundamental para o func
  },[]) //[] => roda so uma vez quando o componente monta
 
  obs: hooks são funçoes especiais que permitem conectar recursos de estado e ciclo de vida a componentes funcionais eliminando a necessidade de classes. 
+
+ ### Fluxo correto para usar o userEffect para uma API
+- componente monta
+- useEffect executa
+- setLoading(true)
+- fetch verifica API
+- verifica se deu erro (response.ok)
+- converter para JSON
+- salve no state
+- setLoading
+- se der erro (setError(...))
