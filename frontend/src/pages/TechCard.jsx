@@ -34,23 +34,31 @@ function TechCard() {
     }));
   }
 
-  function addTechCard() {
-    // se algum campo estiver vazio, a função para
+  async function addTechCard() {
     if (!formData.name.trim() || !formData.status.trim() || !formData.progress.trim()) return;
 
-    const newTechCard = {
-      id: Date.now(),
-      ...formData // copia todas as propriedades de formData
-    };
+    try {
+      const response = await fetch("http://localhost:8080/tasks", { //envia para i back
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json" //diz que estou mandando json
+        },
+        body: JSON.stringify(formData) //transforma o objeto js em json
+      });
 
-    setCards((prev) => [...prev, newTechCard]); // imutabilidade: copia os antigos + adiciona o novo
+      const newTask = await response.json();
 
-    setFormData({ // limpa o formulario
-      name: "",
-      status: "",
-      progress: ""
-    });
-  }
+      setCards((prev) => [...prev, newTask]); //atualiza a tela
+
+      setFormData({
+        name: "",
+        status: "",
+        progress: ""
+      });
+    } catch (error) {
+      console.error("Erro ao criar task:", error);
+    }
+  } 
 
   function deleteCards(id) {
     // usamos filter para criar um novo array sem o card clicado
