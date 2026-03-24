@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TechCardItem from "../components/TechCardItem";
 
 function TechCard() {
 
+   const [cards, setCards] = useState([]);
   // estado do formulario, aqui usamos usestate para guardar os dados que o usuario digita
   const [formData, setFormData] = useState({
     name: "",
@@ -10,7 +11,14 @@ function TechCard() {
     progress: ""
   });
 
-  const [cards, setCards] = useState([]);
+  useEffect(()=>{ //roda uma vez quando o componente carrega 
+    fetch("http://localhost:8080/tasks") //chama a API
+    .then((response)=>response.json()) //transforma a resposta em objeto JS
+    .then((data)=> setCards(data)) // atualiza o estado com o que veio do back
+    .catch((error) =>console.error("erro ao buscar tass: ", error));
+  })
+
+ 
 
   /* Evento de input. essa função roda sempre que o usuario digita algo.
      Aqui usamos inputs controlados, pq o valor do input vem do estado */
