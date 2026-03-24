@@ -60,10 +60,16 @@ function TechCard() {
     }
   } 
 
-  function deleteCards(id) {
-    // usamos filter para criar um novo array sem o card clicado
-    const filteredCards = cards.filter((card) => card.id !== id);
-    setCards(filteredCards);
+  async function deleteCards(id) {
+    try {
+      await fetch(`http://localhost:8080/tasks/${id}`, { //manda a requisiçao para o back
+        method: "DELETE"
+      });
+
+      setCards((prev) => prev.filter((card) => card.id !== id)); //remove do estado local depois que o back aceitou
+    } catch (error) {
+      console.error("Erro ao deletar task:", error);
+    }
   }
 
 
