@@ -1,24 +1,40 @@
 package com.devtrack.backend.model;
 
 public class Task {
-    private String title;
-    private boolean completed;
+    private long id;
+    private String name;
+    private String status;
+    private String progress;
 
 
 
-    public String getTitle (){
-        return title;
+    public long getId(){
+        return id;
+    }
+    public void setId(long id){
+        this.id=id;
+    }
+   
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
     }
 
-    public void setTitle(String title){
-        this.title = title;
+    public String getStatus(){
+        return status;
+    }
+    public void setStatus(String status){
+        this.status = status;
     }
 
-    public boolean getCompleted(){
-        return completed;
+    public String getProgress(){
+        return progress;
     }
-
-    public void setCompleted(boolean completed){
-        this.completed = completed;
+    public void setProgress(String progress){
+        this.progress =progress;
     }
 }
+
+
