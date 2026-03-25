@@ -1,66 +1,55 @@
 package com.devtrack.backend.controller;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devtrack.backend.model.Task;
-
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
+import com.devtrack.backend.service.TaskService;
 
 @RestController
-@RequestMapping("/tasks") // tudo que está nessa classe começa com /tasks
-
-
+@RequestMapping("/tasks")
 public class TaskController {
 
-    private List<Task> tasks = new ArrayList<>();
-    private long nextId = 1;
-    @GetMapping //etiqueta que deve ser executada quando o sistema receber uma requisiçao do tipo get.É usado para buscar informações
-    public List<Task> getTasks(){ //retorna a lista de tarefas
-        return tasks; 
+    private final TaskService taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
-    @PostMapping //é o verbo http utilizado para enviar/criar novos dados no servidor
-    public  Task createTask(@RequestBody Task task){ //o back recebe a tarefa, gera o id e guarda //RequestBody: essa é a parte mais importante. Ela diz ao Spring : pegue o corpo da mensagem que o usuario enviou (o JSON) e transforme ele em um objeto em java
-        task.setId(nextId); //define o id da nova tarefa 
-        nextId ++;
-
-        tasks.add(task);
-        return task; 
+    @GetMapping
+    public List<Task> getTasks() {
+        return taskService.getTasks();
     }
 
-    @PutMapping("/{id}") // rota de atualizaçao
-    public Task updatedTask(@PathVariable long id, @RequestBody Task updatedTask) { // pega o id da url e os novos dados enviados no JSON
-        for(Task task :tasks){
-            if(task.getId() == id){
-                task.setName(updatedTask.getName());
-                task.setStatus(updatedTask.getStatus());
-                task.setProgress(updatedTask.getProgress());
-                return task;
-            }
+    @PostMapping
+    public ResponseEntity<Task> createTask(@RequestBody Task task) {
+        Task createdTask = taskService.createTask(task);
+        return ResponseEntity.status(201).body(createdTask);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable long id, @RequestBody Task updatedTask) {
+        Task task = taskService.updateTask(id, updatedTask);
+
+        if (task == null) {
+            return ResponseEntity.notFound().build(); //gera a 404 - not found
         }
-        
-        return null;
-    }
+
+        return ResponseEntity.ok(task); //gera 200 - ok
+    }   
 
     @DeleteMapping("/{id}")
-    public String deleteTask(@PathVariable long id){
-        boolean  removed = tasks.removeIf(task -> task.getId() == id);
-
-        if(removed){
-            return "Task removida com sucesso";
-        }
-
-        return "Task não encontrada";
+    public ResponseEntity<String> deleteTask(@PathVariable long id) {
+        taskService.deleteTask(id);
+        return ResponseEntity.ok("Task removida com sucesso");
     }
-
 }
-
-
