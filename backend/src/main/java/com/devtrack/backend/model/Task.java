@@ -1,40 +1,50 @@
 package com.devtrack.backend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Task {
-    private long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //o banco vai gerar o id automaticamente
+    private Long id;
+
     private String name;
     private String status;
     private String progress;
 
-
-
-    public long getId(){
+    public Long getId() {
         return id;
     }
-    public void setId(long id){
-        this.id=id;
+
+    public void setId(Long id) {
+        this.id = id;
     }
-   
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getStatus(){
+    public String getStatus() {
         return status;
     }
-    public void setStatus(String status){
+
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public String getProgress(){
+    public String getProgress() {
         return progress;
     }
-    public void setProgress(String progress){
-        this.progress =progress;
+
+    public void setProgress(String progress) {
+        this.progress = progress;
     }
 }
-
-

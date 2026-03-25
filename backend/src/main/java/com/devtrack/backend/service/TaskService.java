@@ -1,48 +1,46 @@
 package com.devtrack.backend.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.devtrack.backend.exception.TaskNotFoundException;
 import com.devtrack.backend.model.Task;
+import com.devtrack.backend.repository.TaskRepository;
 
 @Service
 public class TaskService {
 
-    private List<Task> tasks = new ArrayList<>();
-    private long nextId = 1;
+    private final TaskRepository taskRepository; //agora o service depende do repository e nao mais de uma lista
+
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     public List<Task> getTasks() {
-        return tasks;
+        return taskRepository.findAll();
     }
 
     public Task createTask(Task task) {
-        task.setId(nextId);
-        nextId++;
-        tasks.add(task);
-        return task;
+        return taskRepository.save(task);
     }
 
-    public Task updateTask(long id, Task updatedTask) {
-        for (Task task : tasks) {
-            if (task.getId() == id) {
-                task.setName(updatedTask.getName());
-                task.setStatus(updatedTask.getStatus());
-                task.setProgress(updatedTask.getProgress());
-                return task;
-            }
-        }
+    public Task updateTask(Long id, Task updatedTask) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException("Task não encontrada com id: " + id));
 
-        throw new TaskNotFoundException("Task não encontrada com id: " + id);
+        task.setName(updatedTask.getName());
+        task.setStatus(updatedTask.getStatus());
+        task.setProgress(updatedTask.getProgress());
+
+        return taskRepository.save(task);
     }
 
-    public void deleteTask(long id) {
-        boolean removed = tasks.removeIf(task -> task.getId() == id);
-
-        if (!removed) {
+    public void deleteTask(Long id) {
+        if (!taskRepository.existsById(id)) {
             throw new TaskNotFoundException("Task não encontrada com id: " + id);
         }
+
+        taskRepository.deleteById(id);
     }
 }
