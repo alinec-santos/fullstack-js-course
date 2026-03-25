@@ -4,6 +4,7 @@ import TechCardItem from "../components/TechCardItem";
 function TechCard() {
 
    const [cards, setCards] = useState([]);
+   const [editingId, setEditingId] = useState(null);
   // estado do formulario, aqui usamos usestate para guardar os dados que o usuario digita
   const [formData, setFormData] = useState({
     name: "",
@@ -33,6 +34,16 @@ function TechCard() {
       [name]: value
     }));
   }
+
+  function handleEdit(card) {
+  setFormData({
+    name: card.name,
+    status: card.status,
+    progress: card.progress
+  });
+
+  setEditingId(card.id);
+}
 
   async function addTechCard() {
     if (!formData.name.trim() || !formData.status.trim() || !formData.progress.trim()) return;
@@ -72,6 +83,42 @@ function TechCard() {
     }
   }
 
+async function updateCard(id, updatedData) {
+  try {
+    const response = await fetch(`http://localhost:8080/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(updatedData)
+    });
+
+    const updatedTask = await response.json();
+
+    setCards((prev) =>
+      prev.map((card) => (card.id === id ? updatedTask : card))
+    );
+  } catch (error) {
+    console.error("Erro ao atualizar task:", error);
+  }
+}
+
+async function handleSubmit() {
+  if (editingId !== null) {
+    await updateCard(editingId, formData);
+
+    setEditingId(null);
+    setFormData({
+      name: "",
+      status: "",
+      progress: ""
+    });
+
+    return;
+  }
+
+  await addTechCard();
+}
 
   //mostrar o total de tecnologias
   const total = cards.length;
@@ -181,10 +228,10 @@ function TechCard() {
           {/* Botão de adição */}
           <button
             className="self-end px-8 py-4 bg-emerald-500 text-zinc-950 rounded-xl text-base font-bold tracking-wide hover:bg-emerald-400 active:scale-95 transition-all"
-            onClick={addTechCard}
+            onClick={handleSubmit}
           >
-            + Add tech
-          </button>
+            {editingId !== null ? "Save changes" : "+ Add tech"}
+          </button> 
         </div>
 
         {/* Divisor com contagem de cards */}
@@ -210,6 +257,7 @@ function TechCard() {
               progress={card.progress}
               // aqui enviamos a função para o componente filho — comunicação entre componentes via props
               onDelete={deleteCards}
+              onEdit={()=>handleEdit(card)}
             />
           ))}
         </ul>

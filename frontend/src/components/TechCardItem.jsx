@@ -31,7 +31,9 @@ function TechCardItem(props) {
         {props.progress}%
       </span>
     </div>
-
+    <button
+      className="text-zinc-700 hover:text-blue-400 text-2xl font-bold leading-none transition-colors opacity-0 group-hover:opacity-100 ml-4"
+      onClick={()=> props.onEdit(props.id)}>Editar</button>
     {/* Botão deletar */}
     <button
       className="text-zinc-700 hover:text-red-400 text-2xl font-bold leading-none transition-colors opacity-0 group-hover:opacity-100 ml-4"
