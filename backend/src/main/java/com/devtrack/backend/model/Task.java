@@ -16,6 +16,11 @@ public class Task {
     private String status;
     private String progress;
 
+
+    @ManyToOne //muitas tasks pertecem a user
+    @JoinColumn (name = "user_id") //cria uma coluna no banco que liga a task ao usuario
+    private User user;
+
     public Long getId() {
         return id;
     }
